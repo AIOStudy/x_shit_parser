@@ -30,7 +30,10 @@ class XParser:
 
                     media = ref_tweet.get("includes", {}).get("media", [])
 
-                    image_urls = [media_item.get("url", "") for media_item in media]
+                    image_urls = []
+                    for media_item in media:
+                        if media_item.get("url"):
+                            image_urls.append(media_item["url"])
 
                     self._process_tweet(
                         username,
@@ -45,11 +48,10 @@ class XParser:
                 media = fetched_tweets.get("includes", {}).get("media", [])
                 media_keys = tweet.get("attachments", {}).get("media_keys", [])
 
-                image_urls = [
-                    media_item.get("url", "")
-                    for media_item in media
-                    if media_item["media_key"] in media_keys
-                ]
+                image_urls = []
+                for media_item in media:
+                    if media_item["media_key"] in media_keys and media_item.get("url"):
+                        image_urls.append(media_item["url"])
 
                 self._process_tweet(
                     username,
