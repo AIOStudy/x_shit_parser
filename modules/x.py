@@ -25,8 +25,7 @@ class XAPIHandler:
         }
 
         retries = 0
-
-        for _ in range(MAX_RETRIES):
+        while retries < MAX_RETRIES:
             try:
                 response = requests.request(
                     method=method,
@@ -49,10 +48,9 @@ class XAPIHandler:
                         f"Превышено максимальное количество запросов. Подождите {time_to_wait} секунд"
                     )
                     time.sleep(time_to_wait)
-                    retries += 1
                 else:
                     print(error.response.text)
-                    raise error
+                    retries += 1
 
         raise Exception("Превышено максимальное количество попыток")
 
