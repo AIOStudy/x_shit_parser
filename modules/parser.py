@@ -8,8 +8,6 @@ from utils import extract_text_from_image, get_contract_address
 
 
 class XParser:
-    LATEST_TWEETS_ID_PATH = "latest_tweets_id.json"
-
     def __init__(self):
         self.x_api_handler = XAPIHandler()
         self.tweet_id_storage = TweetIdStorage()
